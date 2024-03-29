@@ -1,22 +1,25 @@
-# Import the ExecuteTrnsys class from the provided script
-from pytrnsys.rsim.executeTrnsys import ExecuteTrnsys
+import pytrnsys.trnsys_util.readTrnsysFiles as readDck
+import pytrnsys.rsim.executeTrnsys as exeTrnsys
 
-# Path to the directory containing the TRNSYS deck file
-deck_path = "."
+# Path to TRNSYS deck file (*.dck)
+dck_file_path = r"."  # Update with the actual path to your TRNSYS deck file
 
-# Name of the TRNSYS deck file (without the extension)
-deck_name = "solar_dhw"
+# Path to TRNSYS executable
+trnsys_exe_path = r"..\..\..\..\..\..\..\TRNSYS18\Exe\TrnEXE64.exe"
 
-# Initialize an instance of ExecuteTrnsys class
-trnsys_executor = ExecuteTrnsys(deck_path, deck_name)
+# Read TRNSYS deck file
+dck_data = readDck.ReadTrnsysFiles(dck_file_path)
 
-# Load the TRNSYS deck file
-trnsys_executor.loadDeck()
+# Initialize ExecuteTrnsys object with the required positional arguments
+trnsys_simulator = exeTrnsys.ExecuteTrnsys("C:\\Users\\ecer\\pytrnsys\\pytrnsys\\data\\examples\\solar_dhw\\", "System1")
+
+# # Set TRNSYS executable path
+trnsys_simulator.setTrnsysExePath(trnsys_exe_path)
+
+# # Load TRNSYS deck
+trnsys_simulator.loadDeck()
+inputDict = {"ignoreOnlinePlotter": True}
 
 # Execute TRNSYS simulation
-trnsys_executor.executeTrnsys()
+trnsys_simulator.executeTrnsys(inputDict)
 
-# After execution, you can perform any post-processing steps here
-# For example, moving or copying output files to another directory
-# trnsys_executor.moveFileFromSource()
-# trnsys_executor.copyFileFromSource("output_file_name.txt")
