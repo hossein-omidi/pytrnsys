@@ -39,7 +39,7 @@ class ExecuteTrnsys:
         self.titleOfLatex = "%s" % self.fileName
 
         self.trnsysVersion = "TRNSYS18"
-        self.trnsysExePath = "C:\\TRNSYS18\\Exe\\TrnEXE64.exe"
+        self.trnsysExePath = "rC:\TRNSYS18\Exe\TrnEXE64.exe"
 
         self.pathOutput = os.path.join(self.path, self.fileName)
 
