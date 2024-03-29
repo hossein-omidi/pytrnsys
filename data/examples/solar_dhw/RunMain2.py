@@ -1,13 +1,12 @@
+from pytrnsys.rsim.executeTrnsys import ExecuteTrnsys
 
-import pytrnsys.trnsys_util.deckTrnsys as DeckTrnsys
+# Initialize an instance of ExecuteTrnsys with the path and name of your Trnsys deck file
+deck_path = "."
+deck_name = "solar_dhw"
+execute_trnsys = ExecuteTrnsys(deck_path, deck_name)
+execute_trnsys.loadDeck()
 
-# Initialize an instance of DeckTrnsys with the path and name of your Trnsys deck file
-deck_path = ".\"
-deck_name = "System1"
-deck_instance = DeckTrnsys(deck_path, deck_name)
+input_dict = {"ignoreOnlinePlotter": True}  # Assuming you want to ignore online plotters
 
-# Load the deck file
-deck_contents = deck_instance.loadDeck()
-
-# Now you have the contents of the deck file in the deck_contents variable
-# You can proceed to run your simulation using this data
+# Execute the Trnsys simulation with the input dictionary
+execute_trnsys.executeTrnsys(input_dict)
