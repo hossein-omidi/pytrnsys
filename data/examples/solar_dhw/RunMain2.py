@@ -11,7 +11,7 @@ trnsys_exe_path = r"..\..\..\..\..\..\..\TRNSYS18\Exe\TrnEXE64.exe"
 dck_data = readDck.ReadTrnsysFiles(dck_file_path)
 
 # Initialize ExecuteTrnsys object with the required positional arguments
-trnsys_simulator = exeTrnsys.ExecuteTrnsys("C:\\Users\\ecer\\pytrnsys\\pytrnsys\\data\\examples\\solar_dhw\\", "System1")
+trnsys_simulator = exeTrnsys.ExecuteTrnsys("C:\\Users\\ecer\\pytrnsys\\pytrnsys\\data\\examples\\solar_dhw", "System1")
 
 # # Set TRNSYS executable path
 trnsys_simulator.setTrnsysExePath(trnsys_exe_path)
