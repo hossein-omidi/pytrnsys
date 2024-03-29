@@ -1,0 +1,16 @@
+============PARALLEL PROCESSING STARTED==============
+Number of simulated cases =5
+Number of CPU used =5
+Estimated time =0.330000 hours, assuming :0.330000 hour per simulation
+============CASES TO BE SIMULATED====================
+Case 1 to be simulated pv_system-CBat2.dck /N
+Case 2 to be simulated pv_system-CBat4.dck /N
+Case 3 to be simulated pv_system-CBat6.dck /N
+Case 4 to be simulated pv_system-CBat8.dck /N
+Case 5 to be simulated pv_system-CBat10.dck /N
+============ALREADY SIMULATED CASES====================
+Finished simulated case 1 at 13:20:27 of day 29-03-24
+Finished simulated case 2 at 13:20:27 of day 29-03-24
+Finished simulated case 3 at 13:20:27 of day 29-03-24
+Finished simulated case 4 at 13:20:27 of day 29-03-24
+Finished simulated case 5 at 13:20:28 of day 29-03-24

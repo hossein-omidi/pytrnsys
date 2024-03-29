@@ -353,7 +353,7 @@ EQUATIONS 2
 PipeLoss0=PPiDhwMix_kW+PPiDhwMains_kW+PPiColIn_kW+PPiDhwDemand_kW+PPiTesToCol_kW+PPiColOut_kW+PPiTesDhwIn_kW+PPiTesDhwOut_kW
 PipeLossTotal=PipeLoss0
 
-ASSIGN DHWSolar+Tes_Mfr.prt 461
+** ASSIGN DHWSolar+Tes_Mfr.prt 461
 
 UNIT 461 TYPE 25! User defined Printer
 PARAMETERS 10
@@ -375,7 +375,7 @@ MfrPiTesDhwIn MfrPiTesDhwOut
 xFracMixDhw MfrPiDhwMix MfrPiDhwMains MfrPiColIn MfrPiDhwDemand MfrPiTesToCol MfrPiColOut 
 MfrPiTesDhwIn MfrPiTesDhwOut 
 
-ASSIGN DHWSolar+Tes_T.prt 462
+** ASSIGN DHWSolar+Tes_T.prt 462
 
 UNIT 462 TYPE 25! User defined Printer
 PARAMETERS 10

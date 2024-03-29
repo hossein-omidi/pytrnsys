@@ -1,16 +1,18 @@
-*******************************
-**BEGIN internal_gains.ddck 
-*******************************
+
+**********************************************************************
+ ** internal_gains_CCT.ddck 
+ **********************************************************************
     
 *****************************************
-** Contact person : D. Carbonell   
-** Creation date  : 30.09.2016 
-** Last changes   : 16.04.20, DC 
+** Contact person : Maike Sshubert
+** Creation date  : 13.01.2022
+** Last changes   : 
 *****************************************
 
 ***************************************************************************
 ** Description: 
-** internal gains reader ussing Type 9 for building models
+** internal gains reader for CCT short runs (file has to be generated for according 
+** to test) ussing Type 9 for building models
 ** TODO: 
 ***************************************************************************
 
@@ -29,47 +31,26 @@
 ** Following this naming standard : qSysIn_name, qSysOut_name, elSysIn_name, elSysOut_name
 ******************************************************************************************
 
+*******************************
+**BEGIN internal_gains.ddck 
+*******************************
 EQUATIONS 3
 qSysOut_CiBuiSH = PBuiGainCircLoss_KW*HeatingSeasonOn
 qSysOut_CiBui = PBuiGainCircLoss_KW*Not(HeatingSeasonOn)
 qSysOut_CiLoss = CircLoss-qSysOut_CiBuiSH-qSysOut_CiBui
-
-***********************************
-** Dependencies with other ddck
-***********************************
-
 EQUATIONS 3
 CircLoss = PPiCircLoss_kW
 HeatingSeasonOn = BoHS
 scaleBuiSize = scaleBuilding
-
-***********************************
-** outputs to other ddck
-***********************************
-
 EQUATIONS 1
 PbuiIntGain = scaleBuiSize*(PBuiLight_kW+PbuiGainPers_KW+PBuiGainEq_KW+PBuiGainCircLoss_KW)*3600     ! Internal Gains [kJ/h]
-
-** Add here the outputs of the TYPE or TYPES that will be used in other types
-** Exception: those for printers and so on dont need to be here.
-
-***********************************
-** Begin CONSTANTS
-***********************************
-
 CONSTANTS 1
 factorCircToSh = 0.5 !How much of circulation losses go to SH
-
-***********************************
-** Begin TYPE
-***********************************
-
 CONSTANTS 1
-unitReadIntGain=36 
 
-ASSIGN PATH$\building\profiles\int_gains_mfb_2019_CCT.txt  unitReadIntGain     
-
-UNIT 36 TYPE 9     ! Data reader internal gains
+unitReadIntGain = 37
+ASSIGN PATH$\building\profiles\int_gains_mfb_2019_CCT.txt unitReadIntGain 
+UNIT 36 TYPE 9      !Changed automatically
 PARAMETERS 22     
 5     ! 1 Mode
 1     ! 2 Header Lines to Skip
@@ -82,11 +63,7 @@ PARAMETERS 22
 unitReadIntGain     ! 9 Logical unit for input file (vorher 18)
 -1     ! 10 Free format mode     
 EQUATIONS 4    ! Internal Gains
-PBuiLight_kW = scaleBuiSize*[36,4]/1000*PGainLight     ! Internal Gains [kJ/h] TO BE CHECKED
-PbuiGainPers_KW = scaleBuiSize*[36,3]/1000*PGainPer     ! Internal Gains [kJ/h]
-PBuiGainEq_KW = scaleBuiSize*[36,2]/1000*PGainEquip     ! Internal Gains [kJ/h]
+PBuiLight_kW = scaleBuiSize*[36,4]/1000*PGainLight      !Changed automatically
+PbuiGainPers_KW = scaleBuiSize*[36,3]/1000*PGainPer      !Changed automatically
+PBuiGainEq_KW = scaleBuiSize*[36,2]/1000*PGainEquip      !Changed automatically
 PBuiGainCircLoss_KW = CircLoss*factorCircToSh    ! relative air mass flow rate for the SFH, -
-
-*******************************
-**END InternalGains.dck
-*******************************

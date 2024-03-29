@@ -1,9 +1,11 @@
 # pylint: skip-file
 # type: ignore
 
-import pytrnsys.rsim.runParallelTrnsys as runTrnsys
+import pytrnsys.rsim.executeTrnsys as runTrnsys
 import os
 
-pathConfig = "./"
-configFile = "run_solar_dhw.config"
-runTool = runTrnsys.RunParallelTrnsys(pathConfig, configFile=configFile)
+execution_instance = runTrnsys.ExecuteTrnsys("./", "System1")
+execution_instance.loadDeck()
+input_dict = {"ignoreOnlinePlotter": False}
+execution_instance.getExecuteTrnsys(input_dict)
+print(execution_instance)

@@ -1,12 +1,12 @@
 ******************************
-**BEGIN ghx_3x3_5m.ddck
+**BEGIN ghx_2x2_5m.ddck
 *******************************
 
 *****************************************
-** 3x3 ground heat exchanger G-Function loading ddck
+** 2x2 ground heat exchanger G-Function loading ddck
 ** Version : v1.0
-** Last Changes: Maike Schubert
-** Date: 15.06.2021
+** Last Changes: Jeremias Schmidli
+** Date: 26.05.2020
 ******************************************
 
 CONSTANTS 3

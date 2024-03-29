@@ -1,0 +1,24 @@
+UNIT	TYPE	Name
+  10	   9	Data reader (TRNSYS)
+  13	 109	Weather data processor (TRNSYS)
+  14	  33	Psychrometrics
+  12	  69	Sky temperature
+  15	  46	Monthly integrator (TRNSYS)
+  21	 194	PV module (TRNSYS)
+  20	  25	User defined printer (TRNSYS)
+  23	  46	Monthly integrator (TRNSYS)
+  22	  65	Online plotter (TRNSYS)
+  26	 993	Recall
+  28	  46	Monthly integrator (TRNSYS)
+  29	  46	Monthly integrator (TRNSYS)
+  27	  65	Online plotter (TRNSYS)
+unitReadEl_3	 11	"C:\Users\ecer\pytrnsys\pytrnsys\data\examples\pv_battery\..\..\..\pytrnsys_ddck\demands\electricity\profiles\MFH30\20191107_MFH_30_electricity_profile_2min.txt"
+unitPrinterWeather	 16	temp\WEATHER_BASE_MO.Prt
+unitWeatherData	 17	"C:\Users\ecer\pytrnsys\pytrnsys\data\examples\pv_battery\..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitWeatherData2	 18	"C:\Users\ecer\pytrnsys\pytrnsys\data\examples\pv_battery\..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitWeatherData3	 19	"C:\Users\ecer\pytrnsys\pytrnsys\data\examples\pv_battery\..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitTimestep1Pv	 218	temp\check1Pv.Plt
+unitPrinterPV	 24	temp\PV_MO.Prt
+unitReadInvPv	 25	"C:\Users\ecer\pytrnsys\pytrnsys\data\examples\pv_battery\..\..\..\pytrnsys_ddck\pv\type194\database\140911_FRONIUS_SYMO_Inverter.dat"
+unitPrinterBat	 30	temp\ELECTRIC_BAT_PV_MO.Prt
+unitPrinterBat_h	 31	temp\ELECTRIC_BAT_HR.Prt

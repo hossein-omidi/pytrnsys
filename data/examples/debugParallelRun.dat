@@ -1,0 +1,18 @@
+============PARALLEL PROCESSING STARTED==============
+Number of simulated cases =12
+Number of CPU used =12
+Estimated time =0.330000 hours, assuming :0.330000 hour per simulation
+============CASES TO BE SIMULATED====================
+Case 1 to be simulated solar_dhw-Ac2-VTes75.dck /N
+Case 2 to be simulated solar_dhw-Ac3-VTes75.dck /N
+Case 3 to be simulated solar_dhw-Ac4-VTes75.dck /N
+Case 4 to be simulated solar_dhw-Ac6-VTes75.dck /N
+Case 5 to be simulated solar_dhw-Ac8-VTes75.dck /N
+Case 6 to be simulated solar_dhw-Ac10-VTes75.dck /N
+Case 7 to be simulated solar_dhw-Ac2-VTes100.dck /N
+Case 8 to be simulated solar_dhw-Ac3-VTes100.dck /N
+Case 9 to be simulated solar_dhw-Ac4-VTes100.dck /N
+Case 10 to be simulated solar_dhw-Ac6-VTes100.dck /N
+Case 11 to be simulated solar_dhw-Ac8-VTes100.dck /N
+Case 12 to be simulated solar_dhw-Ac10-VTes100.dck /N
+============ALREADY SIMULATED CASES====================
