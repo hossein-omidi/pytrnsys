@@ -1,0 +1,43 @@
+UNIT	TYPE	Name
+  10	   9	Data reader (TRNSYS)
+  11	  65	Online plotter (TRNSYS)
+  12	  46	Monthly integrator (TRNSYS)
+  13	  46	Monthly integrator (TRNSYS)
+  18	 109	Weather data processor (TRNSYS)
+  19	  33	Psychrometrics
+  17	  69	Sky temperature
+  20	  46	Monthly integrator (TRNSYS)
+  25	   1	Unknown
+  26	  46	Monthly integrator (TRNSYS)
+  27	  46	Monthly integrator (TRNSYS)
+  28	  65	Online plotter (TRNSYS)
+  32	   2	Collector controller (TRNSYS)
+  33	   2	Collector controller (TRNSYS)
+  34	 811	Tempering valve (SPF)
+  31	 993	Recall
+  36	1924	Plug-flow TES (SPF)
+  35	  46	Monthly integrator (TRNSYS)
+  38	 935	Unknown
+  39	 929	TeePiece (SPF)
+  40	 929	TeePiece (SPF)
+  41	 931	Type 931 CHECK (SPF)
+  42	 931	Type 931 CHECK (SPF)
+  43	 931	Type 931 CHECK (SPF)
+  44	 931	Type 931 CHECK (SPF)
+  45	 931	Type 931 CHECK (SPF)
+  46	 931	Type 931 CHECK (SPF)
+  47	 931	Type 931 CHECK (SPF)
+  48	 931	Type 931 CHECK (SPF)
+  49	  25	User defined printer (TRNSYS)
+  50	  25	User defined printer (TRNSYS)
+  51	  65	Online plotter (TRNSYS)
+unitReadDhw	 14	"..\..\..\pytrnsys_ddck\demands\dhw\profiles\T44A38_DHW_load_year_V3.txt"
+unitPrinterDHW	 15	temp\DHW_MO.Prt
+unitHourlyDHW	 16	temp\DHW_HR.Prt
+unitPrinterWeather	 21	temp\WEATHER_BASE_MO.Prt
+unitWeatherData	 22	"..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitWeatherData2	 23	"..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitWeatherData3	 24	"..\..\..\pytrnsys_ddck\weather\MeteoSwiss\SMA\SMA_hourly.99"
+unitPrintSol	 29	temp\SOLAR_MO.Prt
+unitHourlyCol	 30	temp\SOLAR_HR.Prt
+unitHourlyTes	 37	temp\TES_HR.Prt
