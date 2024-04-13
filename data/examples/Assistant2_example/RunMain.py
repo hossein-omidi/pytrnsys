@@ -1,13 +1,25 @@
-# pylint: skip-file
-# type: ignore
+import pytrnsys.trnsys_util.readTrnsysFiles as readDck
+import pytrnsys.rsim.executeTrnsys as exeTrnsys
 
-import pytrnsys.rsim.executeTrnsys as runTrnsys
-import os
+# Path to TRNSYS deck file (*.dck)
+dck_file_path = r"."  # Update with the actual path to your TRNSYS deck file
 
-execution_instance = runTrnsys.ExecuteTrnsys(".", "solar_dhw")
-execution_instance.loadDeck()
-input_dict = {"ignoreOnlinePlotter": False}
-execution_instance.getExecuteTrnsys(input_dict)
-execution_instance.moveFileFromSource()
-execution_instance.copyFileFromSource("output_file_name.txt")
-execution_instance.executeTrnsys()
+# Path to TRNSYS executable
+trnsys_exe_path = "C:\\TRNSYS18\\Exe\\TrnEXE64.exe"
+
+# Read TRNSYS deck file
+dck_data = readDck.ReadTrnsysFiles(dck_file_path)
+
+# Initialize ExecuteTrnsys object with the required positional arguments
+trnsys_simulator = exeTrnsys.ExecuteTrnsys("C:\\Users\\ecer\\PycharmProjects\\pytrnsys_hossein\\data\\examples\\Assistant2_example", "Assistant2")
+
+# # Set TRNSYS executable path
+trnsys_simulator.setTrnsysExePath(trnsys_exe_path)
+
+# # Load TRNSYS deck
+trnsys_simulator.loadDeck()
+inputDict = {"ignoreOnlinePlotter": True}
+
+# Execute TRNSYS simulation
+trnsys_simulator.executeTrnsys(inputDict)
+
