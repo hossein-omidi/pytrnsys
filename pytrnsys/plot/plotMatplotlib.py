@@ -45,7 +45,6 @@ class PlotMatplotlib:
         self.extensionPlot = extension
 
     def setDefaultColors(self):
-
         myColorsIn = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
         self.myColorsIn = myColorsIn + myColorsIn + myColorsIn + myColorsIn
@@ -89,7 +88,6 @@ class PlotMatplotlib:
     #        self.myColorsOut = ['b','m','#FF9933','g','c','#CCFF33','#CCFFFF''r']
 
     def setPath(self, _path):
-
         self.path = _path
         self.gle = gle.PlotGle(_path)
 
@@ -193,7 +191,7 @@ class PlotMatplotlib:
             plot.axes.grid(which="major", axis="y")
 
             namePdf = "%s.pdf" % nameFile
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("plotMonthly name:%s" % nameWithPath)
 
@@ -203,14 +201,13 @@ class PlotMatplotlib:
 
             if plotEmf:
                 nameEmf = "%s.emf" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(plt, filename=nameEmfWithPath)
 
             plt.close()
 
             if printData == True:
-
                 lines = ""
                 line = "!nMonth %s\n" % (myLabel)
                 lines = lines + line
@@ -219,16 +216,13 @@ class PlotMatplotlib:
                     line = "%d\t%f\n" % (i + 1, var13[i])
                     lines = lines + line
 
-                nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+                nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
                 outfile = open(nameWithPath, "w")
                 outfile.writelines(lines)
                 outfile.close()
 
                 legends = []
                 legends.append(myLabel)
-
-        #            self.gle.getBarPlot(nameFile,nameWithPath,myLabel,xnames=monthSequence)
-        #            self.gle.getBarBalancePlot(nameFile,nameWithPath,myLabel,1,0,xnames=monthSequence)
 
         return namePdf
 
@@ -314,7 +308,7 @@ class PlotMatplotlib:
             plot.set_xticklabels(monthSequence, rotation="vertical")
 
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("plotMonthlyDf name:%s" % nameWithPath)
 
@@ -324,14 +318,13 @@ class PlotMatplotlib:
 
             if plotEmf:
                 nameEmf = "%s.emf" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(plt, filename=nameEmfWithPath)
 
             plt.close()
 
             if printData == True:
-
                 lines = ""
                 line = "!nMonth %s\n" % (myLabel)
                 lines = lines + line
@@ -340,7 +333,7 @@ class PlotMatplotlib:
                     line = "%d\t%f\n" % (i + 1, var13[i])
                     lines = lines + line
 
-                nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+                nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
                 outfile = open(nameWithPath, "w")
                 outfile.writelines(lines)
                 outfile.close()
@@ -371,7 +364,6 @@ class PlotMatplotlib:
         showMonths=False,
         ylim=False,
     ):
-
         move = 0.5
         if showMonths == False:
             N = 13
@@ -449,7 +441,7 @@ class PlotMatplotlib:
             plot.set_xticklabels([monthSequence[i] for i in showMonths], rotation="45")
 
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("plotMonthly name:%s" % nameWithPath)
 
@@ -459,7 +451,7 @@ class PlotMatplotlib:
 
             if plotEmf:
                 nameEmf = "%s.emf" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(plt, filename=nameEmfWithPath)
 
@@ -525,7 +517,6 @@ class PlotMatplotlib:
         variables = inVar.copy()
 
         if useYear == True:
-
             nMonth = 13
             var13 = []
             monthSequence.append(yearTag)
@@ -556,7 +547,6 @@ class PlotMatplotlib:
             showMonths = 12
         width = 0.5 / (len(inVar))  # the width of the bars
         for i, values in enumerate(inVar):
-
             bar = plot.bar(ind - 0.25 + i * width + width / 2, [var13[i][j] for j in showMonths], width)
             bars.append(bar)
 
@@ -584,10 +574,10 @@ class PlotMatplotlib:
             else:
                 yearTag = "Jahr/%d" % yearlyFactor
 
-        plot.set_xticklabels([monthSequence[i] for i in showMonths], rotation="45")
+        plot.set_xticklabels([monthSequence[i] for i in showMonths], rotation="vertical")
 
         namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         logger.debug("plotMonthly name:%s" % nameWithPath)
 
@@ -597,7 +587,7 @@ class PlotMatplotlib:
 
         if plotEmf:
             nameEmf = "%s.emf" % nameFile
-            nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+            nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
             self._plot_as_emf(plt, filename=nameEmfWithPath)
 
@@ -606,7 +596,6 @@ class PlotMatplotlib:
         return namePdf
 
     def _plot_as_emf(self, figure, **kwargs):
-
         try:
             inkscape_path = kwargs.get("inkscape", "C://Program Files//Inkscape//inkscape.exe")
             filepath = kwargs.get("filename", None)
@@ -693,7 +682,6 @@ class PlotMatplotlib:
                 outVar[i] = utils.reorganizeMonthlyFile(outVar[i], startMonth)
 
         if useYear == True:
-
             nMonth = 13
             inVar13 = []
             outVar13 = []
@@ -778,7 +766,11 @@ class PlotMatplotlib:
                 else:
                     bar.append(
                         plot.bar(
-                            ind - move * width, -outVar13[i][showMonths], width, color=self.myColorsOut[i], bottom=addVar
+                            ind - move * width,
+                            -outVar13[i][showMonths],
+                            width,
+                            color=self.myColorsOut[i],
+                            bottom=addVar,
                         )
                     )
                     addVar = addVar - outVar13[i][showMonths]
@@ -819,7 +811,7 @@ class PlotMatplotlib:
             plot.legend(allbar, legends, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0)
 
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -832,16 +824,14 @@ class PlotMatplotlib:
             fig.savefig(nameWithPath)
 
             if plotEmf:
-
                 nameEmf = "%s.emf" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(fig, filename=nameEmfWithPath)
 
             plt.close()
 
             if printData == True:
-
                 lines = ""
                 line = "!nMonth\t"
                 lines = lines + line
@@ -860,14 +850,12 @@ class PlotMatplotlib:
 
                     sumVar = 0.0
                     for i in range(len(inVar13)):
-
                         sumVar = sumVar + inVar13[i][j]
                         line = "%.2f\t" % sumVar
                         lines = lines + line
 
                     sumVar = 0
                     for i in range(len(outVar13)):
-
                         sumVar = sumVar - outVar13[i][j]
                         line = "%.2f\t" % sumVar
                         lines = lines + line
@@ -875,7 +863,7 @@ class PlotMatplotlib:
                     line = "\n"
                     lines = lines + line
 
-                nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+                nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
                 outfile = open(nameWithPath, "w")
                 outfile.writelines(lines)
                 outfile.close()
@@ -954,13 +942,11 @@ class PlotMatplotlib:
         for var in outVar:
             variables.append(-var)
         if useYear == True:
-
             nMonth = 13
             variables13 = []
             monthSequence.append(yearTag)
 
             for i in range(len(variables)):
-
                 variables13.append(utils.addYearlyValue(variables[i], yearlyFactor=yearlyFactor))
 
             if showMonths == False:
@@ -1026,7 +1012,9 @@ class PlotMatplotlib:
                             )
                         )
                     except:
-                        bar.append(plot.bar(ind - move * width, variables13[i][showMonths], width, bottom=data_stack[i]))
+                        bar.append(
+                            plot.bar(ind - move * width, variables13[i][showMonths], width, bottom=data_stack[i])
+                        )
 
             if printImb:
                 if style == "relative":
@@ -1066,7 +1054,7 @@ class PlotMatplotlib:
                 plot.set_title(title)
 
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -1082,7 +1070,7 @@ class PlotMatplotlib:
 
             if plotEmf:
                 nameEmf = "%s.png" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(fig, filename=nameEmfWithPath)
 
@@ -1092,7 +1080,6 @@ class PlotMatplotlib:
                 printData = False
 
             if printData == True:
-
                 lines = ""
                 line = "!nMonth\t"
                 lines = lines + line
@@ -1124,7 +1111,7 @@ class PlotMatplotlib:
                     line = "\n"
                     lines = lines + line
 
-                nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+                nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
                 outfile = open(nameWithPath, "w")
                 outfile.writelines(lines)
                 outfile.close()
@@ -1263,7 +1250,9 @@ class PlotMatplotlib:
                         )
                     )
                 else:
-                    bar.append(plot.bar(ind - move * width, data[-1][showDays], width, color="k", bottom=data_stack[-1]))
+                    bar.append(
+                        plot.bar(ind - move * width, data[-1][showDays], width, color="k", bottom=data_stack[-1])
+                    )
 
             if style == "relative":
                 myLabel = myLabel + " [%]"
@@ -1275,7 +1264,7 @@ class PlotMatplotlib:
             box = plot.get_position()
             plot.set_position([box.x0, box.y0, box.width * 0.8 / (nDays - 1) * nDays, box.height])
             plot.set_xticks(ind)
-            plot.set_xticklabels(dayLabel, rotation="45")
+            plot.set_xticklabels(dayLabel, rotation="vertical")
 
             allbar = []
             for b in bar:
@@ -1287,7 +1276,7 @@ class PlotMatplotlib:
                 plot.set_title(title)
 
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -1303,7 +1292,7 @@ class PlotMatplotlib:
 
             if plotEmf:
                 nameEmf = "%s.png" % nameFile
-                nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+                nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
                 self._plot_as_emf(fig, filename=nameEmfWithPath)
 
@@ -1313,7 +1302,6 @@ class PlotMatplotlib:
                 printData = False
 
             if printData == True:
-
                 lines = ""
                 line = "!nMonth\t"
                 lines = lines + line
@@ -1332,7 +1320,6 @@ class PlotMatplotlib:
                     sumVar = 0.0
                     sumVarNeg = 0.0
                     for i in range(len(variables)):
-
                         sumVarNeg += variables[i][j]
                         line = "%.2f\t" % sumVarNeg
 
@@ -1341,7 +1328,7 @@ class PlotMatplotlib:
                     line = "\n"
                     lines = lines + line
 
-                nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+                nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
                 outfile = open(nameWithPath, "w")
                 outfile.writelines(lines)
                 outfile.close()
@@ -1351,7 +1338,7 @@ class PlotMatplotlib:
 
         return namePdf
 
-    def plotHeatingLimitFit(self, dailyTemperature, heatingPower, fileName, timeStep, title="", yLabel="",doPlot=True):
+    def plotHeatingLimitFit(self, dailyTemperature, heatingPower, fileName, timeStep, title="", yLabel="", doPlot=True):
         """
         Generate a plot of heating power values in dependence of average daily temperature. If timeStep == 'daily' a
         linear fit over these data will be done to obtain values for H and HG (heating limit). Only heating power values
@@ -1394,7 +1381,6 @@ class PlotMatplotlib:
             fitHeatingPower = heatingPower[heatingPower > fitHeatingPowerLowerLimit]
 
             if timeStep == "hourly":
-
                 temperatureHourFromDay = []
                 days = heatingPower.index.dayofyear
                 for day in days:
@@ -1408,12 +1394,12 @@ class PlotMatplotlib:
                     plot.set_title(title + " [" + timeStepTitle + "]")
 
                 plot.set_ylabel(yLabel)
-                plot.set_xlabel("Tagesdurchschnittstemperatur [$^\circ$C]")
+                plot.set_xlabel(r"Tagesdurchschnittstemperatur [$^\circ$C]")
 
                 plt.gcf().subplots_adjust(bottom=0.15)
 
                 namePdf = "%s.%s" % (fileName, self.extensionPlot)
-                nameWithPath = "%s\%s" % (self.path, namePdf)
+                nameWithPath = r"%s\%s" % (self.path, namePdf)
 
                 logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -1424,7 +1410,6 @@ class PlotMatplotlib:
                 return namePdf
 
             elif timeStep == "daily":
-
                 plot.plot(dailyTemperature, heatingPower, "bo", Markersize=3)
                 timeStepTitle = "Tageswerte"
 
@@ -1460,7 +1445,7 @@ class PlotMatplotlib:
                 )
 
                 plot.set_ylabel(yLabel)
-                plot.set_xlabel("Tagesdurchschnittstemperatur [$^\circ$C]")
+                plot.set_xlabel(r"Tagesdurchschnittstemperatur [$^\circ$C]")
 
                 textBox = "\n".join(
                     (
@@ -1484,7 +1469,7 @@ class PlotMatplotlib:
                 plt.gcf().subplots_adjust(bottom=0.15)
 
                 namePdf = "%s.%s" % (fileName, self.extensionPlot)
-                nameWithPath = "%s\%s" % (self.path, namePdf)
+                nameWithPath = r"%s\%s" % (self.path, namePdf)
 
                 logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -1503,7 +1488,6 @@ class PlotMatplotlib:
         return d
 
     def plotDaily(self, var, myLabel, nameFile, plotJpg=False):
-
         N = 365
         width = 0.1  # the width of the bars
         ind = num.arange(N)  # the x locations for the groups
@@ -1526,16 +1510,15 @@ class PlotMatplotlib:
         #        plot.set_xticklabels(('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec','Year/10'),fontsize=20)
 
         namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         plt.xlim([-0.5, 365])
 
         plt.savefig(nameWithPath)
 
         if plotJpg:
-
             nameJpg = "%s.jpg" % myLabel
-            nameJpgWithPath = "%s\%s" % (self.path, nameJpg)
+            nameJpgWithPath = r"%s\%s" % (self.path, nameJpg)
 
             plt.savefig(nameJpgWithPath)
 
@@ -1557,7 +1540,6 @@ class PlotMatplotlib:
         xlim=False,
         ylim=False,
     ):
-
         try:
             size = len(xVar)
         except:
@@ -1590,16 +1572,14 @@ class PlotMatplotlib:
             namePdf = None
 
         else:
-
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             plt.savefig(nameWithPath)
 
             if plotJpg:
-
                 nameJpg = "%s.jpg" % nameFile
-                nameJpgWithPath = "%s\%s" % (self.path, nameJpg)
+                nameJpgWithPath = r"%s\%s" % (self.path, nameJpg)
 
                 plt.savefig(nameJpgWithPath)
 
@@ -1627,7 +1607,7 @@ class PlotMatplotlib:
                     line = "\n"
                     lines = lines + line
 
-            nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+            nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
             outfile = open(nameWithPath, "w")
             outfile.writelines(lines)
             outfile.close()
@@ -1653,7 +1633,6 @@ class PlotMatplotlib:
         xlim=False,
         ylim=False,
     ):
-
         try:
             size = len(xVar)
         except:
@@ -1688,15 +1667,14 @@ class PlotMatplotlib:
             namePdf = None
 
         else:
-
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             plt.savefig(nameWithPath)
 
             if plotJpg:
                 nameJpg = "%s.jpg" % nameFile
-                nameJpgWithPath = "%s\%s" % (self.path, nameJpg)
+                nameJpgWithPath = r"%s\%s" % (self.path, nameJpg)
 
                 plt.savefig(nameJpgWithPath)
 
@@ -1728,7 +1706,7 @@ class PlotMatplotlib:
                     line = "\n"
                     lines = lines + line
 
-            nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+            nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
             outfile = open(nameWithPath, "w")
             outfile.writelines(lines)
             outfile.close()
@@ -1741,7 +1719,6 @@ class PlotMatplotlib:
         return namePdf
 
     def plotDynamicOneVar(self, xVar, yVar, myLegend, nameFile, plotJpg=False):
-
         try:
             size = len(xVar)
         except:
@@ -1765,18 +1742,16 @@ class PlotMatplotlib:
             namePdf = None
 
         else:
-
             namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-            nameWithPath = "%s\%s" % (self.path, namePdf)
+            nameWithPath = r"%s\%s" % (self.path, namePdf)
 
             logger.debug("plotDynamic: Save plot name:%s" % nameWithPath)
 
             plt.savefig(nameWithPath)
 
             if plotJpg:
-
                 nameJpg = "%s.jpg" % nameFile
-                nameJpgWithPath = "%s\%s" % (self.path, nameJpg)
+                nameJpgWithPath = r"%s\%s" % (self.path, nameJpg)
 
                 plt.savefig(nameJpgWithPath)
 
@@ -1788,7 +1763,6 @@ class PlotMatplotlib:
         return namePdf
 
     def calcAndPrintQVersusT(self, fileName, tFlow, eFlow, legends, printEvery=1, normalized=False, cut=False):
-
         nVar = len(legends)
 
         if nVar > 0:
@@ -1863,7 +1837,6 @@ class PlotMatplotlib:
     # var[nvariables,nMonth] or var[nVariables], labels[nvariables]
 
     def plotPie(self, var, labels, myTitle, nameFile, printData=False, extension="pdf", sort=True, fontSize=10):
-
         fig = plt.figure()
 
         fig.add_subplot(111)
@@ -1953,14 +1926,13 @@ class PlotMatplotlib:
         #         plt.legend(bbox_to_anchor=(0.15,0.9),loc='upper right', borderaxespad=0.,fontsize=fontSize)
 
         namePdf = "%s.%s" % (nameFile, extension)
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         plt.savefig(nameWithPath)
 
         plt.close()
 
         if printData == True:
-
             lines = ""
 
             for label in labelsSorted:
@@ -1976,7 +1948,7 @@ class PlotMatplotlib:
             line = "\n"
             lines = lines + line
 
-            nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+            nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
             outfile = open(nameWithPath, "w")
             outfile.writelines(lines)
             outfile.close()
@@ -1998,7 +1970,6 @@ class PlotMatplotlib:
         printData=False,
         useTwoColumns=False,
     ):
-
         try:
             if len(inVar[0]) > 2:
                 monthlyDataUsed = True
@@ -2112,7 +2083,7 @@ class PlotMatplotlib:
         plot.axes.grid(which="major", axis="y")
 
         namePdf = "%s.%s" % (nameFile, self.extensionPlot)
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         logger.debug("PlotMonthlyBalance name:%s" % nameWithPath)
 
@@ -2122,14 +2093,13 @@ class PlotMatplotlib:
 
         if plotEmf:
             nameEmf = "%s.emf" % nameFile
-            nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+            nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
             self._plot_as_emf(plt, filename=nameEmfWithPath)
 
         plt.close()
 
         if printData == True:
-
             lines = ""
             line = "!nMonth\t"
             lines = lines + line
@@ -2149,14 +2119,12 @@ class PlotMatplotlib:
 
                     sumVar = 0.0
                     for i in range(len(inVarYear)):
-
                         sumVar = sumVar + inVarYear[i][j]
                         line = "%f\t" % sumVar
                         lines = lines + line
 
                     sumVar = 0
                     for i in range(len(outVarYear)):
-
                         sumVar = sumVar - outVarYear[i][j]
                         line = "%f\t" % sumVar
                         lines = lines + line
@@ -2173,7 +2141,6 @@ class PlotMatplotlib:
                 linesEmpty = linesEmpty + lineEmpty
                 sumVar = 0.0
                 for i in range(len(inVarYear)):
-
                     sumVar = sumVar + inVarYear[i][j]
                     line = "%f\t" % sumVar
                     linesOne = linesOne + line
@@ -2183,7 +2150,6 @@ class PlotMatplotlib:
                 j = 1
                 sumVar = 0
                 for i in range(len(outVarYear)):
-
                     sumVar = sumVar - outVarYear[i][j]
                     line = "%f\t" % sumVar
                     linesOne = linesOne + line
@@ -2200,7 +2166,7 @@ class PlotMatplotlib:
                 lines = lines + linesEmpty
             #                 lines = lines + linesOne
 
-            nameWithPath = "%s\%s.dat" % (self.path, nameFile)
+            nameWithPath = r"%s\%s.dat" % (self.path, nameFile)
             outfile = open(nameWithPath, "w")
             outfile.writelines(lines)
             outfile.close()
@@ -2214,7 +2180,6 @@ class PlotMatplotlib:
     def plotTemperatureFrequency(
         self, path, nameFile, name, temperature, printData=False, extension="pdf", sort=True, fontSize=10
     ):
-
         fig, ax = plt.subplots(1, 1)
 
         ax.set_title(name)

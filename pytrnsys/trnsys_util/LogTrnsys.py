@@ -19,20 +19,17 @@ logger.propagate = False
 
 class LogTrnsys:
     def __init__(self, _path, _name):
-
         self.fileName = _name  # _name.split('.')[0]
         self.path = _path
-        # self.nameLog = self.path + "\%s.lst" % _name
-        self.nameLog = self.path + "\%s.log" % _name
+        self.nameLog = self.path + r"\%s.log" % _name
 
         # self.printItProblemsFile = True
 
-        self.pathOutput = self.path + "\%s" % self.fileName
+        self.pathOutput = self.path + r"\%s" % self.fileName
         self.linesChanged = ""
         self.titleOfLatex = "%s" % self.fileName
 
-        # self.nameDckPathOutput = self.pathOutput + "\%s.lst" % _name
-        self.nameDckPathOutput = self.pathOutput + "\%s.log" % _name
+        self.nameDckPathOutput = self.pathOutput + r"\%s.log" % _name
 
         self.cleanMode = False
 
@@ -47,7 +44,6 @@ class LogTrnsys:
         self.loadLog()
 
     def loadLog(self):
-
         logger.debug("nameLog:%s" % self.nameLog)
 
         try:
@@ -68,12 +64,10 @@ class LogTrnsys:
             self.numberOfFailedIt = 0
 
     def getCalculationTime(self):
-
         sentence = "Total TRNSYS Calculation Time"
 
         # I increase the number of back lines to read becasue if we add the time for each type it is writen after the calculation time
         for i in range(len(self.lines)):
-
             split = self.lines[i].split(":")
 
             try:
@@ -87,11 +81,9 @@ class LogTrnsys:
         return -99
 
     def checkFatalErrors(self):
-
         sentence = "Total Fatal Errors"
 
         for i in range(len(self.lines)):
-
             split = self.lines[i].split(":")
 
             try:
@@ -105,11 +97,9 @@ class LogTrnsys:
         return -99
 
     def logFatalErrors(self):
-
         sentence = "*** Fatal Error at time"
 
         for i in range(len(self.lines)):
-
             split = self.lines[i].split(":")
 
             try:
@@ -125,11 +115,9 @@ class LogTrnsys:
         return False
 
     def checkWarnings(self):
-
         sentence = "Total Warnings"
 
         for i in range(len(self.lines) - 1, len(self.lines) - 500, -1):
-
             split = self.lines[i].split(":")
 
             try:
@@ -143,17 +131,14 @@ class LogTrnsys:
         return -99
 
     def getMyDataFromLog(self):
-
         sentence = "The simulation failed to converge during"
 
         try:
             for i in range(len(self.lines)):
-
                 split = self.lines[i].split(sentence)
 
                 try:
-
-                    self.numberOfFailedIt = split[1].replace("%", "\%")
+                    self.numberOfFailedIt = split[1].replace("%", r"\%")
                     logger.debug(self.numberOfFailedIt)
 
                 except:
@@ -166,7 +151,6 @@ class LogTrnsys:
         return None
 
     def getIteProblemsForEachMonth(self):
-
         sentence = "TRNSYS Message    441"
         sentenceUnit = "Reported information  : UNITS:"
 
@@ -177,12 +161,10 @@ class LogTrnsys:
 
         try:
             for i in range(len(self.lines)):
-
                 mysplit = self.lines[i].split(sentence)
 
                 try:
                     if mysplit[1] != None:
-
                         hourOfYear = float(self.lines[i - 3].split(":")[1])
                         self.hourWhereItProblems.append(hourOfYear)
 
@@ -204,7 +186,6 @@ class LogTrnsys:
         return iteMonth
 
     def writeFileWithItErrors(self, nameFile="ItProblems.dat"):
-
         # if(self.printItProblemsFile==True):
 
         lines = ""

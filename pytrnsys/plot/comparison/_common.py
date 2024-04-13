@@ -1,6 +1,3 @@
-# pylint: skip-file
-# type: ignore
-
 __all__ = [
     "createManySeriesOrManyChunksFromValues",
     "ManySeries",
@@ -18,15 +15,26 @@ import numpy as _np
 
 from pytrnsys.utils import uncertainFloat as _uf
 
+Values = (
+    _tp.Sequence[tuple[float, float]]
+    | _tp.Mapping[float, _tp.Sequence[tuple[float, float]]]
+    | _tp.Mapping[float, _tp.Mapping[float, _tp.Sequence[tuple[float, float]]]]
+)
 
-def createManySeriesOrManyChunksFromValues(
-    abscissaVariable, ordinateVariable, seriesVariable, chunkVariable, values, shallPrintUncertainties
+
+def createManySeriesOrManyChunksFromValues(  # pylint: disable=too-many-locals
+    abscissaVariable: str,
+    ordinateVariable: str,
+    seriesVariable: str | None,
+    chunkVariable: str | None,
+    values: Values,
+    shallPrintUncertainties,
 ) -> _tp.Union["ManySeries", "ManyChunks", None]:
     if not values:
         return None
 
     if not seriesVariable:
-        valuesForSeries = values[None][None]
+        valuesForSeries = values
 
         abscissaValues, ordinateValues = _createAbscissaAndOrdinateAxisValues(
             abscissaVariable, ordinateVariable, valuesForSeries
@@ -41,9 +49,14 @@ def createManySeriesOrManyChunksFromValues(
         )
         return ManySeries([series])
 
+    assert isinstance(values, dict)
+
     if not chunkVariable:
-        allSeries = []
-        for seriesValue, valuesForSeries in values[None].items():
+        allSeries = list[Series]()
+        sortedSeriesValuesAndValues = _getSortedByGroupingValue(values.items())
+        for seriesValue, valuesForSeries in sortedSeriesValuesAndValues:
+            assert seriesValue is not None
+
             i = len(allSeries) + 1
             seriesGroupingValue = GroupingValue(seriesVariable, seriesValue)
             abscissaValues, ordinateValues = _createAbscissaAndOrdinateAxisValues(
@@ -56,10 +69,16 @@ def createManySeriesOrManyChunksFromValues(
 
         return ManySeries(allSeries)
 
-    chunks = []
-    for chunkValue, chunkGroupingValue in values.items():
+    chunks = list[Chunk]()
+    sortedChunkValuesAndValues = _getSortedByGroupingValue(values.items())
+    for chunkValue, valuesForChunk in sortedChunkValuesAndValues:
+        assert chunkValue
+
         allSeriesForChunk = []
-        for seriesValue, valuesForSeries in chunkGroupingValue.items():
+        sortedSeriesValuesAndValues = _getSortedByGroupingValue(valuesForChunk.items())
+        for seriesValue, valuesForSeries in sortedSeriesValuesAndValues:
+            assert seriesValue
+
             i = sum(len(c.allSeries) for c in chunks) + 1
             seriesGroupingValue = GroupingValue(seriesVariable, seriesValue)
 
@@ -89,7 +108,7 @@ def _createAbscissaAndOrdinateAxisValues(abscissaVariable, ordinateVariable, val
     return xAxisValues, yAxisValues
 
 
-def _getXAndYValuesAndErrorsOrderedByXValues(series) -> _tp.Tuple[_np.ndarray, _np.ndarray, _np.ndarray, _np.ndarray]:
+def _getXAndYValuesAndErrorsOrderedByXValues(series) -> tuple[_np.ndarray, _np.ndarray, _np.ndarray, _np.ndarray]:
     xs, ys = zip(*series)
 
     xValues, xErrors = _getValuesAndErrors(xs)
@@ -122,9 +141,29 @@ def _createAxisValues(variableName, means, errors):
     return xAxisValues
 
 
+_T = _tp.TypeVar("_T")
+
+
+def _getSortedByGroupingValue(groupingValueAndValues: _tp.Iterable[tuple[float, _T]]) -> _tp.Sequence[tuple[float, _T]]:
+    sortedGroupingValueAndValues = sorted(groupingValueAndValues, key=_getFirstItem)
+    return sortedGroupingValueAndValues
+
+
+def _getFirstItem(pair: tuple[float, _T]) -> float:
+    return pair[0]
+
+
 @_dc.dataclass()
 class ManyChunks:
     chunks: _tp.Sequence["Chunk"]
+
+    def __post_init__(self) -> None:
+        if not self.chunks:
+            raise ValueError("Must be given at least one chunk.")
+
+    @property
+    def chunkLength(self) -> int:
+        return max(len(c.allSeries) for c in self.chunks)
 
 
 @_dc.dataclass()
@@ -139,7 +178,7 @@ class Chunk:
 
 
 @_dc.dataclass(eq=False)
-class Series:
+class Series:  # pylint: disable=too-many-instance-attributes
     index: _tp.Optional[int]
     groupingValue: _tp.Optional["GroupingValue"]
 
@@ -184,8 +223,7 @@ class Series:
 
         if not self.chunk:
             return [
-                f"{self.ordinate.name}{sign}({self._indexedAbscissaName},{self.groupingValue.value})"
-                for sign in signs
+                f"{self.ordinate.name}{sign}({self._indexedAbscissaName},{self.groupingValue.value})" for sign in signs
             ]
 
         return [

@@ -11,25 +11,19 @@ Author : Dani Carbonell
 Date   : 14.12.2012
 """
 
-import string, os
-import pytrnsys.pdata.processFiles as spfUtils
-import numpy as np
-import time
 import datetime
 import gc
-import re
+import time
+
+import numpy as np
+
+import pytrnsys.pdata.processFiles as spfUtils
 
 
 class loadBaseNumpy:
     def __init__(self, _name):
-
-        # internal data
-
         self.fileNameWithExtension = _name
-        self.fileName = re.search("(.+?)(\.[^.]*$|$)", _name).group(1)
-
-        #        self.rootPath=os.getcwd()
-        #        print self.rootPath
+        self.fileName = _name.rsplit(".", maxsplit=1)[0]
 
         self.numberOfDataPoints = 0
         self.numberOfVariables = 0
@@ -40,7 +34,6 @@ class loadBaseNumpy:
         self.printWarning = False
 
     def changeName(self, _name):
-
         self.fileNameWithExtension = _name
         name = _name.split(".")
         self.fileName = name[0]
@@ -58,7 +51,6 @@ class loadBaseNumpy:
         fmt="",
         dateExt="",
     ):
-
         if verbose:
             print("%s" % self.doubleLine)
             print("Reading the file: %s " % self.fileNameWithExtension)
@@ -165,14 +157,12 @@ class loadBaseNumpy:
 
                         self.variables[j][i - startIndex] = splittedLine[j]
                     except:
-
                         try:
                             self.variables[j][i - startIndex] = time.mktime(
                                 datetime.datetime.strptime(dateExt + splittedLine[j], fmt).timetuple()
                             )
 
                         except:
-
                             if self.printWarning == True and j >= 1:
                                 #                                print "i:%d j:%d len(lines):%d startIndex:%d"%(i,j,len(lines),startIndex)
                                 print(
@@ -196,7 +186,6 @@ class loadBaseNumpy:
     # It loads a file and saves a new one usig only the desired time.
     # This is usd for plotting easier and quicker parts of large files
     def loadFileAndCut(self, timeBegin, timeEnd, verbose=True, skypedLines=0, format="%Y.%m.%d %H:%M:%S.%f"):
-
         if verbose:
             print("%s" % self.doubleLine)
             print("Reading the file: %s " % self.fileNameWithExtension)
@@ -255,7 +244,6 @@ class loadBaseNumpy:
             print("Copying Data from file to variables array")
 
         for i in range(self.numberOfDataPoints):
-
             splittedLine = linesCut[i].split()
             for j in range(self.numberOfVariables):
                 try:
@@ -266,7 +254,6 @@ class loadBaseNumpy:
                             datetime.datetime.strptime(splittedLine[j], "%Y.%m.%d %H:%M:%S.%f").timetuple()
                         )
                     except:
-
                         if self.printWarning == True and j >= 1:
                             #                                print "i:%d j:%d len(lines):%d startIndex:%d"%(i,j,len(lines),startIndex)
                             print(
@@ -285,7 +272,6 @@ class loadBaseNumpy:
 
     # it loads a file specifiyng the desired year. TIME must be in the first column !!!!
     def loadFileYear(self, year, splitArgument=None, verbose=True):
-
         if verbose:
             print(self.doubleLine)
             print("Reading the file: %s " % self.fileNameWithExtension)
@@ -361,7 +347,6 @@ class loadBaseNumpy:
 
         #        for i in range(indexBegin,indexEnd):
         for i in range(self.numberOfDataPoints):
-
             splittedLine = lines[i].split(splitArgument)
             for j in range(self.numberOfVariables):
                 try:
@@ -372,7 +357,6 @@ class loadBaseNumpy:
                             datetime.datetime.strptime(splittedLine[j], "%Y.%m.%d %H:%M:%S.%f").timetuple()
                         )
                     except:
-
                         if self.printWarning == True and j >= 1:
                             #                                print "i:%d j:%d len(lines):%d startIndex:%d"%(i,j,len(lines),startIndex)
                             print(
@@ -392,7 +376,6 @@ class loadBaseNumpy:
     #        infile.close()
 
     def getByLine(self, indexLine):
-
         if indexLine <= 0:
             raise ValueError("indexLine:%d", indexLine, "should be > 0")
 
@@ -401,14 +384,12 @@ class loadBaseNumpy:
     # indexColumn for 1 to end..
 
     def getByIndex(self, indexColumn):
-
         if indexColumn <= 0:
             raise ValueError("indexColumn:%d", indexColumn, "should be > 0")
 
         return self.variables[indexColumn - 1][:]
 
     def get(self, name, useZero=False, verbose=False):
-
         verbose = True
         for j in range(self.numberOfVariables):
             #             if(verbose==True):
@@ -425,7 +406,6 @@ class loadBaseNumpy:
         return None
 
     def writeFile(self, name, verbose=False, printNames=True):
-
         if verbose:
             print("%s" % self.doubleLine)
             print("Writting output file : %s" % name)
@@ -437,7 +417,6 @@ class loadBaseNumpy:
 
         if printNames:
             for i in range(len(self.namesVariables)):
-
                 if i == len(self.namesVariables) - 1:
                     myHeader = myHeader + "%s" % self.namesVariables[i]
                 else:
@@ -450,19 +429,16 @@ class loadBaseNumpy:
         np.savetxt(name, X, fmt="%+.8e", delimiter=" ", newline="\n", header=myHeader, footer=footer, comments="# ")
 
     def cleanMemory(self):
-
         del self.variables
         del self.namesVariables
 
 
 if __name__ == "__main__":
-
     name = "ValidationIceStorage-TRNSYSInputSmall.dat"
-    #
 
-    path = "D:\MyCalculations\Trnsys\IceStorage\PilotPlantKinderGarten"
+    path = r"D:\MyCalculations\Trnsys\IceStorage\PilotPlantKinderGarten"
 
-    myFile = "%s\%s" % (path, name)
+    myFile = r"%s\%s" % (path, name)
 
     pilot = loadBaseNumpy(myFile)
 
@@ -470,10 +446,8 @@ if __name__ == "__main__":
 
     print(pilot.get("TPcmExp1"))
 
-    #    print pilot.getTranspose("TPcmExp1")
-
     print("END OF LOADBASENUMPY")
 
-    myFileOut = "%s\%s-End.dat" % (path, name.split(".")[0])
+    myFileOut = r"%s\%s-End.dat" % (path, name.split(".")[0])
 
     pilot.writeFile(myFileOut, verbose=True)

@@ -21,7 +21,6 @@ import pytrnsys.report.latexReport as latex
 
 class processHourly:
     def __init__(self, _path, _name):
-
         self.path = _path
         self.name = _name
 
@@ -46,12 +45,10 @@ class processHourly:
         self.addLatexTables = ""
 
     def setFileNameToRead(self, name):
-
         self.name = name
         self.fileNameRead = self.path + "\\" + self.name
 
     def loadHourly(self):
-
         self.loadFile = load.loadBaseNumpy(self.fileNameRead)
 
         self.loadFile.loadFile(skypChar="#", skypedLines=0, splitArgument="\t")
@@ -60,15 +57,12 @@ class processHourly:
         self.loadFile.get(name)
 
     def calculateMonthly(self, varHourly):
-
         return utils.calculateMonthlyValues(varHourly)
 
     def calculateDaily(self, varHourly):
-
         return utils.calculateDaylyValuesFromHourly(varHourly)
 
     def plotHourly(self, var, myLabel, nameFile, plotJpg=False):
-
         N = 8760
         hours = num.arange(N)
 
@@ -95,13 +89,13 @@ class processHourly:
         axes.set_ylabel(myLabel, fontsize=self.sizeAxis)
 
         namePdf = "%s.pdf" % nameFile
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         plt.savefig(nameWithPath)
 
         if plotJpg:
             name = "%s.jpg" % nameFile
-            nameWithPath = "%s\%s" % (self.path, name)
+            nameWithPath = r"%s\%s" % (self.path, name)
             plt.savefig(nameWithPath)
 
         plt.close()
@@ -109,7 +103,6 @@ class processHourly:
         return namePdf
 
     def plotMonthly(self, var, myLabel, nameFile, yearlyFactor, plotEmf=False):
-
         N = 13
         width = 0.35  # the width of the bars
         ind = num.arange(N)  # the x locations for the groups
@@ -138,16 +131,15 @@ class processHourly:
         )
 
         namePdf = "%s.pdf" % nameFile
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         plt.xlim([-0.5, 12.5])
 
         plt.savefig(nameWithPath)
 
         if plotEmf:
-
             nameEmf = "%s.jpg" % nameFile
-            nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+            nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
             plt.savefig(nameEmfWithPath)
 
@@ -159,9 +151,7 @@ class processHourly:
     def plotMonthlyBalance(
         self, inVar, outVar, legends, myLabel, nameFile, unit, yearlyFactor=0, useYear=False, plotEmf=False
     ):
-
         if useYear == True:
-
             nMonth = 13
             inVar13 = []
             outVar13 = []
@@ -240,7 +230,7 @@ class processHourly:
         plot.legend(allbar, legends, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, fontsize=self.sizeLegend)
 
         namePdf = "%s.pdf" % nameFile
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         if useYear == True:
             plt.xlim([-0.5, 13.5])
@@ -250,9 +240,8 @@ class processHourly:
         plt.savefig(nameWithPath)
 
         if plotEmf:
-
             nameEmf = "%s.jpg" % nameFile
-            nameEmfWithPath = "%s\%s" % (self.path, nameEmf)
+            nameEmfWithPath = r"%s\%s" % (self.path, nameEmf)
 
             plt.savefig(nameEmfWithPath)
 
@@ -264,7 +253,6 @@ class processHourly:
 
     # Assumed that all units are equal
     def addLatexMonthlyData(self, caption, legends, myUnit, inVar, outVar, imb):
-
         nMonth = 12
         sizeBox = None
         # inVar(nVar,nMonth)
@@ -279,7 +267,6 @@ class processHourly:
         lines = ""
 
         for i in range(nMonth):
-
             line = "%s\t" % utils.getMonthKey(i + 1)
             lines = lines + line
 
@@ -320,7 +307,6 @@ class processHourly:
         self.doc.lines = ""
 
     def plotDaily(self, var, myLabel, nameFile, plotJpg=False):
-
         N = 365
         width = 0.1  # the width of the bars
         ind = num.arange(N)  # the x locations for the groups
@@ -341,16 +327,15 @@ class processHourly:
         #        plot.set_xticklabels(('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec','Year/10'),fontsize=20)
 
         namePdf = "%s.pdf" % nameFile
-        nameWithPath = "%s\%s" % (self.path, namePdf)
+        nameWithPath = r"%s\%s" % (self.path, namePdf)
 
         plt.xlim([-0.5, 365])
 
         plt.savefig(nameWithPath)
 
         if plotJpg:
-
             nameJpg = "%s.jpg" % myLabel
-            nameJpgWithPath = "%s\%s" % (self.path, nameJpg)
+            nameJpgWithPath = r"%s\%s" % (self.path, nameJpg)
 
             plt.savefig(nameJpgWithPath)
 

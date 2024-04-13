@@ -25,7 +25,6 @@ logger = logging.getLogger("root")
 
 class checkSimulationDataClass(results.ResultsProcessedFile):
     def __init__(self, _path):
-
         results.ResultsProcessedFile.__init__(self, _path)
         self.version = "checkSimulationData v1 2019-01-22"
 
@@ -79,7 +78,6 @@ class checkSimulationDataClass(results.ResultsProcessedFile):
         return failedCases
 
     def moveFailedCases(self):
-
         """
         first folder is not transfered as a whole folder, but only the files... -> seems to work now?
         """
@@ -97,7 +95,6 @@ class checkSimulationDataClass(results.ResultsProcessedFile):
             logger.debug("moved failed cases from " + self.path + " to " + dstFolder)
 
     def checkNumberOfMonthsSimulated(self):
-
         dataPath = self.path
 
         cases = [name for name in os.listdir(dataPath) if os.path.isdir(dataPath + "\\" + name)]
@@ -115,14 +112,13 @@ class checkSimulationDataClass(results.ResultsProcessedFile):
         pass
 
     def plots(self):
-
         spfSorted = [x for y, x in sorted(zip(self.imb, self.spf))]
         imbSorted = sorted(self.imb)
 
         fig, ax = plt.subplots(figsize=(8, 8))
         ax1 = plt.subplot()
         ax1.plot(spfSorted, imbSorted)
-        ax1.set(ylabel="$Q_{imb}$ [\%]", xlabel="$SPF_{SHP+}$")
+        ax1.set(ylabel=r"$Q_{imb}$ [\%]", xlabel="$SPF_{SHP+}$")
         ax1.grid()
 
         extension = "pdf"
@@ -140,7 +136,7 @@ class checkSimulationDataClass(results.ResultsProcessedFile):
         fig, ax = plt.subplots(figsize=(8, 8))
         ax1 = plt.subplot()
         ax1.plot(imbSorted, itSorted)
-        ax1.set(xlabel="$Q_{imb}$ [\%]", ylabel="$It_{prob}$")
+        ax1.set(xlabel=r"$Q_{imb}$ [\%]", ylabel="$It_{prob}$")
         ax1.grid()
 
         extension = "pdf"
@@ -152,7 +148,6 @@ class checkSimulationDataClass(results.ResultsProcessedFile):
         self.imbItPdf = figureName + ".%s" % extension
 
     def createLatexSimulationReport(self, sortBy="it"):
-
         self.plotT = False
 
         self.plots()

@@ -12,7 +12,7 @@ import json as _json
 
 import dataclasses_jsonschema as _dcj
 
-_S0 = _tp.TypeVar("_S0", bound="UpgradableJsonSchemaMixinVersion0")
+_S = _tp.TypeVar("_S", bound="UpgradableJsonSchemaMixinVersion0")
 _T = _tp.TypeVar("_T", bound="UpgradableJsonSchemaMixin")
 
 
@@ -26,11 +26,12 @@ class SerializationError(ValueError):
 class UpgradableJsonSchemaMixinVersion0(_dcj.JsonSchemaMixin):
     @classmethod
     def from_dict(
-        cls: _tp.Type[_S0],
+        cls: _tp.Type[_S],
         data: _dcj.JsonDict,
         validate=True,
         validate_enums: bool = True,
-    ) -> _S0:
+        schema_type: _dcj.SchemaType = _dcj.DEFAULT_SCHEMA_TYPE,  # /NOSONAR
+    ) -> _S:
         if cls._doesRequireVersion() and "__version__" not in data:
             raise SerializationError("No '__version__' field found.")
 
@@ -47,15 +48,16 @@ class UpgradableJsonSchemaMixinVersion0(_dcj.JsonSchemaMixin):
         except _dcj.ValidationError as error:
             raise SerializationError("Validation failed.") from error
 
-        return _tp.cast(_S0, deserializedObject)
+        return _tp.cast(_S, deserializedObject)
 
     def to_dict(
         self,
         omit_none: bool = True,
         validate: bool = False,
         validate_enums: bool = True,
+        schema_type: _dcj.SchemaType = _dcj.DEFAULT_SCHEMA_TYPE,  # /NOSONAR
     ) -> _dcj.JsonDict:
-        data = super().to_dict(omit_none, validate, validate_enums)
+        data = super().to_dict(omit_none, validate, validate_enums, schema_type)
 
         assert (
             "__version__" not in data
@@ -124,6 +126,7 @@ class UpgradableJsonSchemaMixin(UpgradableJsonSchemaMixinVersion0, _abc.ABC):
         data: _dcj.JsonDict,
         validate=True,
         validate_enums: bool = True,
+        schema_type: _dcj.SchemaType = _dcj.DEFAULT_SCHEMA_TYPE,  # /NOSONAR
     ) -> _T:
         if validate:
             try:

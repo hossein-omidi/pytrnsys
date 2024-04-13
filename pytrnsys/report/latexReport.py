@@ -103,7 +103,6 @@ class LatexReport:
         self.cleanMode = _mode
 
     def setDocumentClass(self, _name):
-
         self.documentClass = _name
 
     def setAuthor(self, _name):
@@ -114,7 +113,7 @@ class LatexReport:
 
     def setTitle(self, _name):
         if "_" in _name:
-            newName = _name.replace("_", "\_")
+            newName = _name.replace("_", r"\_")
         else:
             newName = _name
         self.title = newName
@@ -123,7 +122,6 @@ class LatexReport:
         self.subTitle = _name
 
     def cleanFiles(self):
-
         for plotName in self.plotsAdded:
             pdfWithPath = "%s\\%s" % (self.outputPath, plotName)
 
@@ -140,12 +138,11 @@ class LatexReport:
     ):
         'function to execute latex file, the function can use either "pdflatex" or "texify" to create pdf.'
 
-        logFile = "%s\%s.log" % (self.outputPath, self.fileName)
+        logFile = r"%s\%s.log" % (self.outputPath, self.fileName)
         logFileEnd = logFile
 
         if moveToTrnsysLogFile == True:
-
-            logFileEnd = "%s\%s.TRNSYS.log" % (self.outputPath, self.fileName)
+            logFileEnd = r"%s\%s.TRNSYS.log" % (self.outputPath, self.fileName)
 
             try:
                 shutil.copy(logFile, logFileEnd)
@@ -160,7 +157,6 @@ class LatexReport:
         else:
             latexExe = '"%s"' % pathLatexExe
 
-        #        fileNameTexWithPath = '"%s\\%s"'%(self.outputPath,self.fileNameTex)
         if LatexPackage == "texify":
             cmd = [
                 latexExe,
@@ -170,7 +166,8 @@ class LatexReport:
                 "--clean",
                 f"--tex-option=-output-directory={self.outputPath}",
                 "--silent",
-                self.fileNameTexWithPath]
+                self.fileNameTexWithPath,
+            ]
         elif LatexPackage == "pdflatex":
             cmd = ["pdflatex", "--silent", self.fileNameTex]
         else:
@@ -190,21 +187,21 @@ class LatexReport:
 
         if moveToTrnsysLogFile == True and removeAuxFiles:
             os.remove(logFileEnd)
-        name = "%s\%s.log" % (self.outputPath, self.fileName)
+        name = r"%s\%s.log" % (self.outputPath, self.fileName)
 
         try:
             os.remove(name)
         except:
             logger.warning(name + " could not be removed, maybe there was a problem with the Latex File...")
 
-        name = "%s\%s.aux" % (self.outputPath, self.fileName)
+        name = r"%s\%s.aux" % (self.outputPath, self.fileName)
         try:
             os.remove(name)
         except:
             logger.warning(name + " could not be removed, maybe there was a problem with the Latex File...")
 
         if LatexPackage == "texify":
-            name = "%s\%s.synctex.gz" % (self.outputPath, self.fileName)
+            name = r"%s\%s.synctex.gz" % (self.outputPath, self.fileName)
             try:
                 os.remove(name)
             except:
@@ -221,7 +218,6 @@ class LatexReport:
             self.cleanFiles()
 
     def addBeginDocument(self):
-
         line = "\\documentclass[english]{%s}\n" % (self.documentClass)
         self.lines = self.lines + line
         line = "\\usepackage{subfigure}\n"
@@ -248,7 +244,7 @@ class LatexReport:
         self.lines = self.lines + line
         line = "\\reportSubName{%s} \n" % self.subTitle
         self.lines = self.lines + line
-        line = "\\reportDate{\\today \hspace{0.1cm} at: \\currenttime \hspace{0.1cm} h} \n"
+        line = "\\reportDate{\\today \\hspace{0.1cm} at: \\currenttime \\hspace{0.1cm} h} \n"
         self.lines = self.lines + line
         #        line="\\reportDate{\\currenttime \hspace{0.1cm} h} \n" ; self.lines = self.lines + line
         line = "\\author{%s}\n" % self.nameAuthor
@@ -260,7 +256,6 @@ class LatexReport:
         self.lines = self.lines + line
 
     def addEndDocumentAndCreateTexFile(self):
-
         line = "\\end{document}\n"
         self.lines = self.lines + line
 
@@ -272,22 +267,18 @@ class LatexReport:
         outfile.close()
 
     def addSection(self, line):
-
         lines = "\\section{%s}\n" % line
         self.lines = self.lines + lines
 
     def addUserTex(self, lines):
-
         self.lines = self.lines + lines
 
     def clearPage(self):
-
         line = " \\clearpage \n"
 
         self.lines = self.lines + line
 
     def addPlotShort(self, namePdf, caption="any", label="any"):
-
         self.plotsAdded.append(namePdf)
 
         line = "\\begin{figure}[!ht]\n"
@@ -345,7 +336,6 @@ class LatexReport:
         self.lines = self.lines + line
 
     def addTable(self, _caption, _names, _units, _label, _linesResults, useFormula=False, addCaptionLines=False):
-
         line = "\\begin{table}[!ht]\n"
         self.lines = self.lines + line
         line = "\\centering\n"
@@ -383,7 +373,6 @@ class LatexReport:
             self.lines = self.lines + line
 
         for i in range(len(_names)):
-
             if useFormula:
                 _names[i] = "$%s$" % _names[i]
 
@@ -453,7 +442,6 @@ class LatexReport:
         self.lines = self.lines + line
 
     def addPandasTable(self, _caption, _sizeBox, _units, _label, _pandasTable, useFormula=False, addCaptionLines=False):
-
         line = "\\begin{table}[!ht]\n"
         self.lines = self.lines + line
 
@@ -495,7 +483,6 @@ class LatexReport:
         lenghName=0.47,
         lenghRest=0.05,
     ):
-
         line = "\\begin{tiny}\n"
         self.lines = self.lines + line
 
@@ -520,7 +507,6 @@ class LatexReport:
             self.lines = self.lines + line
 
         for i in range(len(_names)):
-
             if useFormula:
                 _names[i] = "$%s$" % _names[i]
 
@@ -590,7 +576,6 @@ class LatexReport:
         self.lines = self.lines + line
 
     def addTableMonthly(self, var, names, _units, caption, label, begin=0, nMonth=12, addLines=False, sizeBox=None):
-
         if len(names) != len(_units):
             units = []
             for i in range(len(names)):
@@ -637,7 +622,6 @@ class LatexReport:
         return lines
 
     def addTableMonthlyDf(self, var, names, _units, caption, label, defMonths, addLines=False, sizeBox=None):
-
         if len(names) != len(_units):
             units = []
             for i in range(len(names)):
